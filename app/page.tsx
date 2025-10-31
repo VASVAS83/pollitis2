@@ -33,14 +33,11 @@ export default async function Home() {
                 </span>
               </div>
             ) : (
-              <form action="/auth/google">
-                <button
-                  type="submit"
-                  className="bg-green-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-green-700 transition"
-                >
-                  Σύνδεση με Google
-                </button>
-              </form>
+              <form action="/auth/google" method="POST">
+  <button type="submit" className="bg-green-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-green-700 transition">
+    Σύνδεση με Google
+  </button>
+</form>
             )}
           </div>
         </div>
