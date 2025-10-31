@@ -14,7 +14,6 @@ export const POST = async (request: Request) => {
 
     const supabase = createRouteHandlerClient({ cookies });
 
-    // Mock AI Summary (replace with real AI later)
     const mockSummary = `AI Summary:\n\nΑνακοίνωση από Δήμο Θεσσαλονίκης. Έργα υποδομής, προϋπολογισμός 2.5M€, έναρξη 2025.`;
 
     const { data, error } = await supabase
