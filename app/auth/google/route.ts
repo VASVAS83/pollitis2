@@ -12,11 +12,9 @@ export const GET = async () => {
     }
   });
 
-  if (data.url) {
-    return NextResponse.redirect(data.url);
-  }
-
-  return NextResponse.redirect(new URL('/', process.env.NEXT_PUBLIC_SITE_URL!));
+  return data.url
+    ? NextResponse.redirect(data.url)
+    : NextResponse.redirect(new URL('/', process.env.NEXT_PUBLIC_SITE_URL!));
 };
 
-export const POST = GET; // Reuse same logic
+export const POST = GET;
