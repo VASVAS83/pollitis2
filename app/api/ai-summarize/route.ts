@@ -2,11 +2,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
-
 export const POST = async (request: Request) => {
   try {
     const body = await request.json();
@@ -16,9 +11,14 @@ export const POST = async (request: Request) => {
       return NextResponse.json({ error: 'URL is required' }, { status: 400 });
     }
 
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+
     const mockSummary = `AI Summary:\n\nΑνακοίνωση από Δήμο Θεσσαλονίκης. Έργα υποδομής, προϋπολογισμός 2.5M€, έναρξη 2025.`;
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('posts')
       .insert({
         title: `AI: ${url.split('/').pop()?.slice(0, 30)}...`,
@@ -28,13 +28,13 @@ export const POST = async (request: Request) => {
       });
 
     if (error) {
-      console.error('Supabase error:', error);
+      console.error('Supabase insert error:', error);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true, data });
+    return NextResponse.json({ success: true });
   } catch (err) {
-    console.error('API error:', err);
+    console.error('Unexpected error:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 };
