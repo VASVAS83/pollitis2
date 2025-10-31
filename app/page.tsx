@@ -33,11 +33,14 @@ export default async function Home() {
                 </span>
               </div>
             ) : (
-              <form action="/auth/google" method="POST">
-  <button type="submit" className="bg-green-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-green-700 transition">
-    Σύνδεση με Google
-  </button>
-</form>
+              <form action="/auth/google">
+                <button
+                  type="submit"
+                  className="bg-green-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-green-700 transition"
+                >
+                  Σύνδεση με Google
+                </button>
+              </form>
             )}
           </div>
         </div>
@@ -78,11 +81,34 @@ export default async function Home() {
         </select>
       </div>
 
+      {/* AI SUMMARY FORM – BELOW FILTER */}
+      <div className="max-w-7xl mx-auto px-6 mt-8 mb-12">
+        <form 
+          action="/api/ai-summarize" 
+          method="POST" 
+          className="flex flex-col sm:flex-row gap-3 max-w-2xl mx-auto"
+        >
+          <input
+            type="url"
+            name="url"
+            placeholder="Πάστε Facebook link εδώ..."
+            className="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+            required
+          />
+          <button
+            type="submit"
+            className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition whitespace-nowrap"
+          >
+            AI Summary
+          </button>
+        </form>
+      </div>
+
       {/* POSTS GRID */}
       <div className="max-w-7xl mx-auto px-6 pb-20">
         {posts?.length === 0 ? (
           <div className="text-center py-20 text-gray-500 text-lg">
-            Δεν υπάρχουν αναρτήσεις ακόμα. Οι διαχειριστές θα προσθέσουν σύντομα!
+            Δεν υπάρχουν αναρτήσεις ακόμα. Πάτησε "AI Summary" για να ξεκινήσεις!
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
