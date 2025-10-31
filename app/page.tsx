@@ -81,11 +81,32 @@ export default async function Home() {
         </select>
       </div>
 
-      {/* AI SUMMARY FORM – BELOW FILTER */}
+      {/* AI SUMMARY FORM – BELOW FILTER – NO 500 */}
       <div className="max-w-7xl mx-auto px-6 mt-8 mb-12">
-        <form 
-          action="/api/ai-summarize" 
-          method="POST" 
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.currentTarget);
+            const url = formData.get('url') as string;
+
+            if (!url.trim()) {
+              alert('Παρακαλώ εισάγετε έγκυρο URL');
+              return;
+            }
+
+            const res = await fetch('/api/ai-summarize', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ url })
+            });
+
+            if (res.ok) {
+              window.location.reload();
+            } else {
+              const error = await res.json();
+              alert(error.error || 'Σφάλμα: Δοκιμάστε ξανά');
+            }
+          }}
           className="flex flex-col sm:flex-row gap-3 max-w-2xl mx-auto"
         >
           <input
